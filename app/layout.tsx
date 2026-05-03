@@ -17,12 +17,12 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lexicon — Know What You Sign",
+  title: "GradePilot — GPA-Optimized Study Planner",
   description:
-    "AI-powered contract analysis for startups and small businesses. Upload any legal agreement and get risk flags, missing clause alerts, and negotiation suggestions in plain English.",
-  applicationName: "Lexicon",
-  authors: [{ name: "Lexicon" }],
-  keywords: ["contract analysis", "legal AI", "startup", "NDA", "MSA", "legal tech"],
+    "AI-powered study optimization for students. Add classes, exam weights, and available time to generate a prioritized study plan and curated calendar.",
+  applicationName: "GradePilot",
+  authors: [{ name: "GradePilot" }],
+  keywords: ["study planner", "GPA optimizer", "student productivity", "exam prep", "education app"],
 };
 
 export const viewport: Viewport = {

@@ -1,8 +1,8 @@
 {
-  "name": "lexicon-sovereign",
+  "name": "gradepilot",
   "version": "0.1.0",
   "private": true,
-  "description": "LEXICON SOVEREIGN — A high-performance, desktop-native React workstation for legal intelligence and compliance. Kinetic Brutalism.",
+  "description": "GradePilot — a student-focused React app for GPA optimization, study planning, and exam prep.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

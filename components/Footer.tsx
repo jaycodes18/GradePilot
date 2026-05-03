@@ -1,79 +1,28 @@
 import Link from "next/link";
-import { LexiconMark } from "./LexiconLogo";
-
-const LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/app", label: "App" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/research", label: "Research" },
-  { href: "/future", label: "Future" },
-  { href: "/inspiration", label: "Inspiration" },
-];
+import { GradePilotLogo } from "./Logo";
 
 export function Footer() {
   return (
-    <footer className="bg-neo-black text-neo-white border-t-4 border-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* Logo + tagline */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <LexiconMark size={42} />
-              <div>
-                <div className="font-bold text-xl uppercase tracking-tight text-white leading-none">
-                  LEXICON
-                </div>
-                <div className="neo-label text-[9px] text-white/40 mt-1">
-                  CONTRACT INTELLIGENCE
-                </div>
-              </div>
-            </div>
-            <p className="font-bold text-sm text-white/70 leading-relaxed max-w-[28ch]">
-              AI-powered contract analysis for startups and small businesses.
-            </p>
-            <div className="mt-4 inline-block bg-neo-accent border-4 border-white px-3 py-1">
-              <span className="neo-label text-[10px] text-white">NOT LEGAL ADVICE</span>
+    <footer className="border-t border-slate-200/70 bg-white/80 backdrop-blur mt-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <GradePilotLogo size={32} />
+            <div>
+              <p className="font-extrabold tracking-tight text-slate-900">GradePilot</p>
+              <p className="text-xs font-medium text-slate-500">GPA-optimized planning for students.</p>
             </div>
           </div>
 
-          {/* Navigation */}
-          <div>
-            <p className="neo-label text-xs text-white/40 mb-4">Pages</p>
-            <div className="flex flex-col gap-2">
-              {LINKS.map((l) => (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  className="font-bold text-sm hover:text-neo-secondary transition-colors duration-100 w-fit"
-                >
-                  {l.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* CTA */}
-          <div>
-            <p className="neo-label text-xs text-white/40 mb-4">Get Started</p>
-            <p className="font-bold text-sm text-white/70 leading-relaxed mb-4">
-              Upload a contract and get your first analysis in under 60 seconds.
-            </p>
-            <Link
-              href="/app"
-              className="neo-btn bg-neo-secondary text-black px-6 py-3 text-sm shadow-neo-white"
-            >
-              Try Demo Free
-            </Link>
+          <div className="flex items-center gap-5 text-sm font-semibold text-slate-500">
+            <Link href="/" className="hover:text-slate-900 transition">Home</Link>
+            <Link href="/app" className="hover:text-slate-900 transition">Planner</Link>
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t-4 border-white/20 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="neo-label text-[10px] text-white/40">
-            2026 LEXICON. HACKATHON PROTOTYPE. NOT LEGAL ADVICE.
-          </p>
-          <p className="neo-label text-[10px] text-white/40">
-            BUILT FOR FOUNDERS, BY FOUNDERS.
-          </p>
+        <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row gap-1 sm:items-center sm:justify-between text-xs font-medium text-slate-400">
+          <span>© 2026 GradePilot · IMSA.ai Hackathon Prototype</span>
+          <span>Built for students 🎓</span>
         </div>
       </div>
     </footer>

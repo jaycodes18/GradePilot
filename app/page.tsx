@@ -1,21 +1,26 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { ArrowRight, CalendarCheck2, Sparkles, Target, TrendingUp, Zap } from "lucide-react";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
-import { AnimateOnScroll } from "@/components/AnimateOnScroll";
-import { ArrowRight, Shield, AlertTriangle, FileText, Zap, Search, CheckCircle } from "lucide-react";
+
+const fadeUp = {
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.2 },
+  transition: { duration: 0.5, ease: "easeOut" as const },
+};
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-neo-bg">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-indigo-50/40 text-slate-900">
       <Nav />
       <main>
         <Hero />
-        <Marquee />
-        <AnimateOnScroll><HowItWorks /></AnimateOnScroll>
-        <AnimateOnScroll delay={60}><Features /></AnimateOnScroll>
-        <AnimateOnScroll delay={80}><DemoHighlight /></AnimateOnScroll>
-        <AnimateOnScroll delay={60}><PricingSnippet /></AnimateOnScroll>
-        <AnimateOnScroll delay={80}><FinalCTA /></AnimateOnScroll>
+        <Features />
+        <SocialProof />
       </main>
       <Footer />
     </div>
@@ -24,218 +29,104 @@ export default function HomePage() {
 
 function Hero() {
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
-      <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 items-start">
-        {/* Left column */}
+    <section className="relative overflow-hidden">
+      {/* Background orbs */}
+      <motion.div
+        className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-indigo-300/30 to-fuchsia-300/20 blur-3xl pointer-events-none"
+        animate={{ x: [0, 20, -10, 0], y: [0, 12, -8, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute -bottom-32 -right-32 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-cyan-300/25 to-indigo-200/20 blur-3xl pointer-events-none"
+        animate={{ x: [0, -16, 10, 0], y: [0, -8, 14, 0] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24 relative grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* Left */}
         <div>
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 border-4 border-black px-4 py-2 bg-neo-secondary shadow-neo-sm mb-8">
-            <div className="w-2 h-2 bg-black rounded-full animate-blink" />
-            <span className="neo-label text-xs">AI Contract Analysis for Startups</span>
-          </div>
+          <motion.div {...fadeUp}
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-50 to-fuchsia-50 border border-indigo-100 rounded-full px-4 py-2 shadow-sm mb-6">
+            <Sparkles size={13} className="text-fuchsia-500" />
+            <span className="text-xs font-semibold text-indigo-700">Built for finals season 🎓</span>
+          </motion.div>
 
-          {/* Headline */}
-          <h1 className="font-bold neo-display text-[clamp(3rem,7vw,5.5rem)] leading-[0.9] mb-6">
-            KNOW WHAT
-            <br />
-            <span className="relative inline-block">
-              YOU SIGN.
-              <span
-                className="absolute bottom-0 left-0 right-0 h-[8px] bg-neo-accent"
-                aria-hidden
-              />
+          <motion.h1 {...fadeUp} transition={{ delay: 0.05 }}
+            className="text-[clamp(2.4rem,6vw,4.5rem)] font-black tracking-tight leading-[0.95] mb-5">
+            Study with a<br />
+            <span className="bg-gradient-to-r from-indigo-600 via-fuchsia-600 to-cyan-500 bg-clip-text text-transparent">
+              GPA Game Plan
             </span>
-          </h1>
+          </motion.h1>
 
-          <p className="font-bold text-xl text-black/80 leading-relaxed max-w-[56ch] mb-8">
-            Upload any legal agreement. Get AI-powered risk flags, plain-English explanations,
-            and concrete next steps in under 60 seconds. Built for founders, not lawyers.
-          </p>
+          <motion.p {...fadeUp} transition={{ delay: 0.1 }}
+            className="text-lg text-slate-500 font-medium leading-relaxed max-w-[52ch] mb-8">
+            GradePilot turns your grades, exam weights, and available hours into a
+            mathematically prioritized study schedule — day by day, class by class.
+          </motion.p>
 
-          <div className="flex flex-col sm:flex-row gap-4 mb-10">
-            <Link
-              href="/app"
-              className="neo-btn bg-neo-accent text-white px-8 py-4 text-base gap-3"
-            >
-              Analyze a Contract
-              <ArrowRight strokeWidth={3} size={18} />
+          <motion.div {...fadeUp} transition={{ delay: 0.15 }} className="flex flex-col sm:flex-row gap-3">
+            <Link href="/app"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-600 to-fuchsia-600 text-white px-7 py-3.5 font-semibold shadow-xl shadow-indigo-300/40 hover:brightness-110 active:scale-[.98] transition">
+              Open Planner <ArrowRight size={16} />
             </Link>
-            <Link
-              href="/app"
-              className="neo-btn bg-neo-secondary text-black px-8 py-4 text-base"
-            >
-              Try Demo (no sign-up)
-            </Link>
-          </div>
-
-          {/* Trust markers */}
-          <div className="flex flex-wrap gap-6">
-            {["NDAs", "MSAs", "SOWs", "Employment offers", "Vendor agreements", "Leases"].map(
-              (type) => (
-                <div key={type} className="flex items-center gap-2">
-                  <CheckCircle strokeWidth={3} size={14} />
-                  <span className="font-bold text-sm">{type}</span>
-                </div>
-              ),
-            )}
-          </div>
+            <a href="#features"
+              className="inline-flex items-center justify-center rounded-2xl bg-white border border-slate-200 px-7 py-3.5 font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition shadow-sm">
+              See how it works
+            </a>
+          </motion.div>
         </div>
 
-        {/* Right column - preview card */}
-        <div className="relative mt-8 lg:mt-0">
-          <div className="neo-card bg-white p-0 overflow-hidden rotate-1">
+        {/* Right — preview card */}
+        <motion.div
+          initial={{ opacity: 0, y: 24, rotate: 1 }}
+          animate={{ opacity: 1, y: 0, rotate: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="relative"
+        >
+          {/* Glow behind card */}
+          <div className="absolute inset-4 bg-gradient-to-br from-indigo-300/30 to-fuchsia-300/20 blur-2xl rounded-3xl" />
+
+          <div className="relative rounded-3xl border border-white/80 bg-white/90 backdrop-blur-xl p-5 shadow-2xl shadow-indigo-100/50">
             {/* Card header */}
-            <div className="bg-neo-black text-white px-5 py-3 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-neo-accent" />
-                <span className="neo-label text-xs text-white">LEXICON ANALYSIS</span>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <p className="text-sm font-bold text-slate-700">Tonight&apos;s Plan</p>
               </div>
-              <span className="neo-label text-xs text-white/60">VENDOR MSA</span>
+              <span className="text-xs font-semibold bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full">3.0h</span>
             </div>
-            {/* Card body */}
-            <div className="p-5 space-y-3">
-              <RiskPreviewItem
-                sev="critical"
-                label="Indemnification is backwards"
-                desc="You indemnify the vendor, not the other way around."
-              />
-              <RiskPreviewItem
-                sev="critical"
-                label="AI model training on your data"
-                desc="Vendor has a perpetual license to train AI on all your business data."
-              />
-              <RiskPreviewItem
-                sev="warn"
-                label="Liability cap: 1 month of fees"
-                desc="If they lose your data, they owe you almost nothing."
-              />
-              <RiskPreviewItem
-                sev="info"
-                label="Auto-renewal: 90 day notice required"
-                desc="Easy to miss the cancellation window and get locked in."
-              />
-            </div>
-            <div className="border-t-4 border-black px-5 py-3 bg-neo-muted/30">
-              <span className="neo-label text-xs">4 ISSUES FOUND - NEGOTIATE BEFORE SIGNING</span>
-            </div>
-          </div>
 
-          {/* Floating decorative badge */}
-          <div className="absolute -top-5 -right-5 w-20 h-20 bg-neo-secondary border-4 border-black shadow-neo rotate-12 flex items-center justify-center">
-            <span className="font-bold text-center text-xs uppercase leading-tight">
-              Free
-              <br />
-              Demo
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+            {[
+              { name: "AP Calculus", time: "1.5h", task: "Timed derivatives set + corrections", color: "bg-indigo-100 text-indigo-700", dot: "bg-indigo-500" },
+              { name: "US History",  time: "1.0h", task: "Cold recall sprint + timeline review", color: "bg-rose-100 text-rose-700", dot: "bg-rose-500" },
+              { name: "English",     time: "0.5h", task: "Essay paragraph polish", color: "bg-amber-100 text-amber-700", dot: "bg-amber-400" },
+            ].map((item, i) => (
+              <motion.div key={item.name}
+                initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.35 + i * 0.08 }}
+                className={`mb-3 rounded-2xl ${item.color.split(" ")[0]} p-3.5`}>
+                <div className="flex items-center justify-between mb-1.5">
+                  <div className="flex items-center gap-2">
+                    <span className={`w-2 h-2 rounded-full ${item.dot}`} />
+                    <p className={`font-semibold text-sm ${item.color.split(" ")[1]}`}>{item.name}</p>
+                  </div>
+                  <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${item.color}`}>{item.time}</span>
+                </div>
+                <p className="text-xs text-slate-600">{item.task}</p>
+              </motion.div>
+            ))}
 
-function RiskPreviewItem({
-  sev,
-  label,
-  desc,
-}: {
-  sev: "critical" | "warn" | "info";
-  label: string;
-  desc: string;
-}) {
-  const colors = {
-    critical: "bg-neo-accent/20 border-neo-accent",
-    warn: "bg-neo-secondary/40 border-neo-secondary",
-    info: "bg-neo-muted/30 border-neo-muted",
-  };
-  const labels = { critical: "CRITICAL", warn: "WARN", info: "INFO" };
-  return (
-    <div className={`border-4 ${colors[sev]} p-3`}>
-      <div className="flex items-start gap-3">
-        <span className="neo-label text-[9px] mt-0.5 flex-shrink-0">{labels[sev]}</span>
-        <div>
-          <div className="font-bold text-sm">{label}</div>
-          <div className="font-bold text-xs text-black/60 mt-0.5 leading-snug">{desc}</div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Marquee() {
-  const items = [
-    "NDA ANALYSIS",
-    "MSA RISK FLAGS",
-    "EMPLOYMENT REVIEW",
-    "VENDOR AGREEMENTS",
-    "NEGOTIATION TIPS",
-    "MISSING CLAUSES",
-    "PLAIN ENGLISH",
-    "60 SECONDS",
-  ];
-  const repeated = [...items, ...items];
-  return (
-    <div className="border-y-4 border-black bg-neo-black text-neo-secondary py-4 overflow-hidden">
-      <div className="marquee-track">
-        {repeated.map((item, i) => (
-          <span key={i} className="neo-label text-sm px-8 flex-shrink-0">
-            {item}
-            <span className="mx-8 text-neo-accent">+</span>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function HowItWorks() {
-  return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
-      <div className="mb-12">
-        <div className="neo-label text-xs mb-3">HOW IT WORKS</div>
-        <h2 className="neo-display text-[clamp(2rem,5vw,3.8rem)] max-w-[20ch]">
-          Three steps to full contract clarity.
-        </h2>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-4 border-black">
-        {[
-          {
-            n: "01",
-            icon: <FileText strokeWidth={3} size={28} />,
-            title: "Paste or Upload",
-            desc: "Paste your contract text directly or use our demo contracts to see Lexicon in action. Supports NDAs, MSAs, employment offers, vendor agreements, leases, and more.",
-            bg: "bg-white",
-          },
-          {
-            n: "02",
-            icon: <Search strokeWidth={3} size={28} />,
-            title: "AI Scans Every Clause",
-            desc: "Our AI engine reads every clause in your agreement and flags risks, identifies missing protections, and detects unusual or one-sided terms with full plain-English explanations.",
-            bg: "bg-neo-muted/30",
-          },
-          {
-            n: "03",
-            icon: <Zap strokeWidth={3} size={28} />,
-            title: "Act on Clear Recommendations",
-            desc: "Get a risk verdict, specific negotiation suggestions, missing clause checklist, and a plain-English summary that tells you exactly what to do before you sign.",
-            bg: "bg-neo-secondary/40",
-          },
-        ].map((step, i) => (
-          <div
-            key={step.n}
-            className={`${step.bg} p-8 ${i < 2 ? "border-r-4 border-black" : ""}`}
-          >
-            <div className="flex items-center justify-between mb-6">
-              <div className="neo-label text-4xl font-bold text-black/20">{step.n}</div>
-              <div className="w-14 h-14 border-4 border-black bg-neo-bg flex items-center justify-center shadow-neo-sm">
-                {step.icon}
+            {/* GPA lift badge */}
+            <div className="mt-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-fuchsia-600 p-3.5 text-white">
+              <div className="flex items-center gap-2 mb-1">
+                <TrendingUp size={14} />
+                <p className="text-xs font-bold">Projected GPA Lift</p>
               </div>
+              <p className="font-black text-xl">3.42 → 3.71</p>
             </div>
-            <h3 className="font-bold text-xl mb-3">{step.title}</h3>
-            <p className="font-bold text-sm text-black/70 leading-relaxed">{step.desc}</p>
           </div>
-        ))}
+        </motion.div>
       </div>
     </section>
   );
@@ -243,195 +134,92 @@ function HowItWorks() {
 
 function Features() {
   return (
-    <section className="bg-neo-black text-white py-16 md:py-24 border-y-4 border-black neo-dots-dense">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="mb-12">
-          <div className="neo-label text-xs mb-3 text-white/50">WHAT YOU GET</div>
-          <h2 className="neo-display text-[clamp(2rem,5vw,3.8rem)] max-w-[22ch] text-white">
-            Everything a founder needs to negotiate safely.
-          </h2>
+    <section id="features" className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-20">
+      <motion.div {...fadeUp} className="text-center mb-12">
+        <div className="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-100 rounded-full px-4 py-1.5 mb-4">
+          <Zap size={12} className="text-indigo-600" />
+          <span className="text-xs font-semibold text-indigo-700 uppercase tracking-[0.12em]">How it works</span>
         </div>
+        <h2 className="text-3xl sm:text-4xl font-black tracking-tight mb-3">Three steps from stress to structure</h2>
+        <p className="text-slate-500 font-medium max-w-[50ch] mx-auto">No generic tips. Just a prioritized plan built from your actual grades and time.</p>
+      </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[
-            {
-              icon: <AlertTriangle strokeWidth={3} size={22} />,
-              title: "Risk Flags with Severity",
-              desc: "Every issue is tagged CRITICAL, WARN, or INFO so you know what to focus on first. No noise, just signal.",
-              color: "bg-neo-accent",
-            },
-            {
-              icon: <FileText strokeWidth={3} size={22} />,
-              title: "Plain-English Translation",
-              desc: "Each clause is explained in language a founder can understand. What it says, what it means, and why it matters.",
-              color: "bg-neo-secondary",
-            },
-            {
-              icon: <Shield strokeWidth={3} size={22} />,
-              title: "Missing Clause Detection",
-              desc: "Know what is not in the contract. Missing data security terms, no severance, no SLA - all surfaced automatically.",
-              color: "bg-neo-muted",
-            },
-            {
-              icon: <Zap strokeWidth={3} size={22} />,
-              title: "Negotiation Suggestions",
-              desc: "Side-by-side before/after edits for every flagged clause. Copy, paste, and send to the other side.",
-              color: "bg-neo-secondary",
-            },
-            {
-              icon: <Search strokeWidth={3} size={22} />,
-              title: "Precautionary Actions",
-              desc: "Ranked by urgency: what to do right now, what to fix before signing, and what to monitor after.",
-              color: "bg-neo-accent",
-            },
-            {
-              icon: <CheckCircle strokeWidth={3} size={22} />,
-              title: "Risk Verdict",
-              desc: "A clear LOW / MEDIUM / HIGH verdict with confidence score and one-line summary of the biggest risk.",
-              color: "bg-neo-muted",
-            },
-          ].map((f) => (
-            <div
-              key={f.title}
-              className="border-4 border-white/30 bg-white/5 p-6 hover:bg-white/10 transition-colors duration-200 group"
-            >
-              <div
-                className={`w-12 h-12 ${f.color} border-4 border-white flex items-center justify-center mb-4`}
-              >
-                {f.icon}
-              </div>
-              <h3 className="font-bold text-lg mb-2">{f.title}</h3>
-              <p className="font-bold text-sm text-white/70 leading-relaxed">{f.desc}</p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {[
+          {
+            icon: <Target size={22} />,
+            color: "from-indigo-500 to-indigo-700",
+            bg: "bg-indigo-50",
+            title: "Enter your classes",
+            desc: "Current grade, final weight, difficulty, and exam date — takes about 60 seconds.",
+          },
+          {
+            icon: <TrendingUp size={22} />,
+            color: "from-fuchsia-500 to-fuchsia-700",
+            bg: "bg-fuchsia-50",
+            title: "Optimize by GPA impact",
+            desc: "Allocates hours where each 30-minute chunk gives the strongest grade return per class.",
+          },
+          {
+            icon: <CalendarCheck2 size={22} />,
+            color: "from-cyan-500 to-cyan-700",
+            bg: "bg-cyan-50",
+            title: "Follow your calendar",
+            desc: "Get a curated day-by-day plan you can actually stick to. Export to any calendar app.",
+          },
+        ].map((item, i) => (
+          <motion.div key={item.title} {...fadeUp} transition={{ delay: i * 0.07 }}
+            className={`rounded-3xl border border-slate-200/70 ${item.bg} p-6 shadow-sm hover:shadow-md transition`}>
+            <div className={`w-11 h-11 rounded-2xl bg-gradient-to-br ${item.color} text-white grid place-items-center mb-4 shadow-lg`}>
+              {item.icon}
             </div>
-          ))}
-        </div>
+            <h3 className="font-bold text-lg mb-2">{item.title}</h3>
+            <p className="text-slate-600 text-sm leading-relaxed">{item.desc}</p>
+          </motion.div>
+        ))}
       </div>
     </section>
   );
 }
 
-function DemoHighlight() {
+function SocialProof() {
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-        <div>
-          <div className="neo-label text-xs mb-3">HACKATHON-READY</div>
-          <h2 className="neo-display text-[clamp(2rem,5vw,3.8rem)] mb-5">
-            Three demo outcomes, live in the pitch.
-          </h2>
-          <p className="font-bold text-lg text-black/70 leading-relaxed mb-6">
-            Flip between a clean NDA, a risky vendor contract, and a predatory employment
-            offer - live during the demo. No API key needed. No setup. Just click and show.
-          </p>
-          <Link href="/app" className="neo-btn bg-neo-accent text-white px-8 py-4 text-base gap-3">
-            Open Demo Mode
-            <ArrowRight strokeWidth={3} size={18} />
-          </Link>
-        </div>
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-20">
+      <motion.div {...fadeUp}
+        className="rounded-3xl bg-gradient-to-br from-indigo-600 via-fuchsia-600 to-cyan-500 p-10 md:p-14 text-white relative overflow-hidden shadow-2xl shadow-indigo-200">
 
-        <div className="space-y-4">
-          {[
-            { label: "Demo 1 - Clean NDA", risk: "LOW", color: "bg-neo-muted" },
-            { label: "Demo 2 - Vendor MSA", risk: "MEDIUM", color: "bg-neo-secondary" },
-            { label: "Demo 3 - Employment Offer", risk: "HIGH", color: "bg-neo-accent" },
-          ].map((demo) => (
-            <Link
-              key={demo.label}
-              href="/app"
-              className="flex items-center justify-between border-4 border-black bg-white shadow-neo hover:-translate-y-1 hover:shadow-neo-md transition-all duration-200 px-5 py-4 group"
-            >
-              <span className="font-bold text-base">{demo.label}</span>
-              <div className={`${demo.color} border-4 border-black px-3 py-1`}>
-                <span className="neo-label text-xs">{demo.risk} RISK</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+        {/* Background decoration */}
+        <div className="absolute top-0 right-0 w-72 h-72 rounded-full bg-white/5 -translate-y-1/2 translate-x-1/3" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full bg-white/5 translate-y-1/2 -translate-x-1/4" />
 
-function PricingSnippet() {
-  return (
-    <section className="bg-neo-secondary border-y-4 border-black py-16 md:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-start justify-between flex-wrap gap-8">
+        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div>
-            <div className="neo-label text-xs mb-3">BUSINESS MODEL</div>
-            <h2 className="neo-display text-[clamp(2rem,5vw,3.5rem)] max-w-[24ch]">
-              Plans built for every stage of growth.
-            </h2>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-white/60 mb-3">Start free · No account needed</p>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight mb-4">Know exactly what to study tonight.</h2>
+            <p className="text-white/75 font-medium leading-relaxed mb-6 max-w-[44ch]">
+              Stop guessing which class needs your attention. GradePilot tells you.
+            </p>
+            <Link href="/app"
+              className="inline-flex items-center gap-2 rounded-2xl bg-white text-indigo-700 px-7 py-3.5 font-bold shadow-xl hover:bg-indigo-50 active:scale-[.98] transition">
+              Build My Plan <ArrowRight size={16} />
+            </Link>
           </div>
-          <Link href="/pricing" className="neo-btn bg-neo-black text-white px-7 py-4 text-sm gap-3 self-end">
-            See All Plans
-            <ArrowRight strokeWidth={3} size={16} />
-          </Link>
-        </div>
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-0 border-4 border-black">
-          {[
-            { name: "Basic", price: "$19", desc: "For early-stage founders reviewing the occasional agreement.", featured: false },
-            { name: "Pro", price: "$49", desc: "For startups moving fast with vendors, customers, and hires.", featured: true },
-            { name: "Premium", price: "$149", desc: "For teams that need compliance workflows and audit trails.", featured: false },
-          ].map((plan, i) => (
-            <div
-              key={plan.name}
-              className={`p-8 ${i < 2 ? "border-r-4 border-black" : ""} ${
-                plan.featured ? "bg-neo-black text-white" : "bg-white"
-              }`}
-            >
-              {plan.featured && (
-                <div className="neo-label text-[10px] bg-neo-accent text-white px-3 py-1 inline-block mb-4">
-                  MOST POPULAR
-                </div>
-              )}
-              <div className="font-bold text-2xl mb-1">{plan.name}</div>
-              <div className="font-bold text-4xl mb-3">
-                {plan.price}
-                <span className={`text-base ${plan.featured ? "text-white/60" : "text-black/50"}`}>
-                  /mo
-                </span>
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              { label: "GPA Boundaries", value: "9 tracked" },
+              { label: "Calendar Export", value: ".ics file" },
+              { label: "Study Plan", value: "Day-by-day" },
+              { label: "Setup Time", value: "60 seconds" },
+            ].map(stat => (
+              <div key={stat.label} className="rounded-2xl bg-white/10 p-4 backdrop-blur">
+                <p className="text-xl font-black">{stat.value}</p>
+                <p className="text-xs font-semibold text-white/70 mt-1">{stat.label}</p>
               </div>
-              <p className={`font-bold text-sm leading-relaxed ${plan.featured ? "text-white/70" : "text-black/70"}`}>
-                {plan.desc}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function FinalCTA() {
-  return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 md:py-24">
-      <div className="border-4 border-black bg-neo-black text-white p-10 md:p-16 relative overflow-hidden neo-dots">
-        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-end justify-between gap-8">
-          <div>
-            <div className="neo-label text-xs mb-4 text-white/50">READY TO START</div>
-            <h2 className="neo-display text-[clamp(2.4rem,6vw,5rem)] max-w-[18ch]">
-              Your next contract deserves a second opinion.
-            </h2>
-          </div>
-          <div className="flex flex-col gap-4 flex-shrink-0">
-            <Link href="/app" className="neo-btn bg-neo-accent text-white px-8 py-4 text-base gap-3">
-              Analyze Free
-              <ArrowRight strokeWidth={3} size={18} />
-            </Link>
-            <Link href="/pricing" className="neo-btn bg-transparent text-white border-white px-8 py-4 text-base">
-              View Pricing
-            </Link>
+            ))}
           </div>
         </div>
-
-        {/* Decorative */}
-        <div className="absolute -bottom-8 -right-8 w-40 h-40 border-8 border-neo-accent/30 rotate-12" aria-hidden />
-        <div className="absolute top-8 right-24 text-9xl font-bold text-white/5 select-none" aria-hidden>
-          LEX
-        </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
