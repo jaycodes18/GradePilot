@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, CalendarCheck2, Sparkles, Target, TrendingUp, Zap } from "lucide-react";
+
+const APP_HREF = "/login";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 
@@ -66,9 +68,9 @@ function Hero() {
           </motion.p>
 
           <motion.div {...fadeUp} transition={{ delay: 0.15 }} className="flex flex-col sm:flex-row gap-3">
-            <Link href="/app"
+            <Link href={APP_HREF}
               className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-600 to-fuchsia-600 text-white px-7 py-3.5 font-semibold shadow-xl shadow-indigo-300/40 hover:brightness-110 active:scale-[.98] transition">
-              Open Planner <ArrowRight size={16} />
+              Get Started Free <ArrowRight size={16} />
             </Link>
             <a href="#features"
               className="inline-flex items-center justify-center rounded-2xl bg-white border border-slate-200 px-7 py-3.5 font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition shadow-sm">
@@ -199,7 +201,7 @@ function SocialProof() {
             <p className="text-white/75 font-medium leading-relaxed mb-6 max-w-[44ch]">
               Stop guessing which class needs your attention. GradePilot tells you.
             </p>
-            <Link href="/app"
+            <Link href={APP_HREF}
               className="inline-flex items-center gap-2 rounded-2xl bg-white text-indigo-700 px-7 py-3.5 font-bold shadow-xl hover:bg-indigo-50 active:scale-[.98] transition">
               Build My Plan <ArrowRight size={16} />
             </Link>

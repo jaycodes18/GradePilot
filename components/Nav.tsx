@@ -6,7 +6,7 @@ import { GradePilotLogo } from "./Logo";
 
 const LINKS = [
   { href: "/", label: "Home" },
-  { href: "/app", label: "Planner" },
+  { href: "/dashboard", label: "Dashboard" },
 ];
 
 export function Nav() {
@@ -31,7 +31,7 @@ export function Nav() {
           {LINKS.map((link) => {
             const active = path === link.href || (link.href !== "/" && path.startsWith(link.href));
             return (
-              <Link key={link.href} href={link.href}
+              <Link key={link.href} href={link.href} prefetch={false}
                 className={`px-3.5 py-2 rounded-xl text-sm font-semibold transition ${
                   active
                     ? "bg-indigo-600 text-white shadow-md shadow-indigo-200"
@@ -44,8 +44,8 @@ export function Nav() {
         </div>
 
         {/* Mobile CTA */}
-        <Link href="/app" className="sm:hidden inline-flex items-center justify-center rounded-xl bg-indigo-600 text-white px-4 py-2 text-sm font-semibold shadow-md shadow-indigo-200">
-          Planner
+        <Link href="/login" className="sm:hidden inline-flex items-center justify-center rounded-xl bg-indigo-600 text-white px-4 py-2 text-sm font-semibold shadow-md shadow-indigo-200">
+          Sign In
         </Link>
       </div>
     </nav>
