@@ -250,10 +250,16 @@ export default function PlannerPage() {
               ))}
             </div>
             {plan && (
-              <button onClick={() => exportIcs(plan)}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 px-3 py-2 text-xs font-semibold hover:bg-slate-50 transition">
-                <Download size={12} /> .ics
-              </button>
+              <div className="flex items-center gap-2">
+                <button onClick={() => addToGoogleCalendar(plan)}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 px-3 py-2 text-xs font-semibold hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 transition">
+                  📅 Google Cal
+                </button>
+                <button onClick={() => exportIcs(plan)}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 px-3 py-2 text-xs font-semibold hover:bg-slate-50 transition">
+                  <Download size={12} /> .ics
+                </button>
+              </div>
             )}
           </div>
 
@@ -515,6 +521,23 @@ function rationale(c: Course, before: number, after: number, h: number) { const 
 function boundaryBonus(g: number) { const next=BOUNDARIES.find(b=>b>g); if(!next) return 0.6; const gap=next-g; if(gap<=2) return 1.6; if(gap<=5) return 1.35; if(gap<=8) return 1.15; return 1; }
 function weighted(v: {points:number,credits:number}[]) { const c=v.reduce((s,x)=>s+x.credits,0); return c?v.reduce((s,x)=>s+x.points*x.credits,0)/c:0; }
 function gpaPoint(g: number) { if(g>=93) return 4;if(g>=90) return 3.7;if(g>=87) return 3.3;if(g>=83) return 3;if(g>=80) return 2.7;if(g>=77) return 2.3;if(g>=73) return 2;if(g>=70) return 1.7;if(g>=60) return 1;return 0; }
+function addToGoogleCalendar(plan: PlanResult) {
+  // Open one Google Calendar event per day (merged sessions)
+  const activeDays = plan.dayPlans.filter(d => d.totalHours > 0).slice(0, 15); // open first 15 days
+  for (const day of activeDays.slice(0, 3)) {
+    const date = day.date.replaceAll("-", "");
+    const title = encodeURIComponent(`GradePilot Study — ${day.sessions.map(s => s.courseName).join(", ")}`);
+    const details = encodeURIComponent(day.sessions.map(s => `${s.courseName} (${s.hours.toFixed(1)}h): ${s.task}`).join("\n"));
+    const start = `${date}T170000`;
+    const end   = `${date}T${String(17 + Math.ceil(day.totalHours)).padStart(2,"0")}0000`;
+    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}`;
+    window.open(url, "_blank", "noopener");
+  }
+  if (activeDays.length > 3) {
+    alert(`Opened 3 events in Google Calendar. Export the full .ics file to import all ${activeDays.length} study days at once.`);
+  }
+}
+
 function exportIcs(plan: PlanResult) {
   const esc=(t:string)=>t.replaceAll("\\","\\\\").replaceAll(";","\\;").replaceAll(",","\\,").replaceAll("\n","\\n");
   const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//GradePilot//EN",
