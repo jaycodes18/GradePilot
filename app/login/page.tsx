@@ -100,27 +100,6 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* Divider */}
-        <div className="flex items-center gap-3 my-6">
-          <div className="flex-1 h-px bg-slate-200" />
-          <span className="text-xs font-semibold text-slate-400">or sign up with</span>
-          <div className="flex-1 h-px bg-slate-200" />
-        </div>
-
-        {/* Social buttons (decorative for demo) */}
-        <div className="flex items-center justify-center gap-4">
-          {[
-            { label: "G", color: "text-rose-500 border-rose-200 hover:bg-rose-50" },
-            { label: "in", color: "text-blue-600 border-blue-200 hover:bg-blue-50" },
-            { label: "🍎", color: "text-slate-900 border-slate-200 hover:bg-slate-50" },
-          ].map(b => (
-            <button key={b.label} type="button"
-              className={`w-14 h-12 rounded-2xl border-2 ${b.color} font-bold text-sm transition flex items-center justify-center`}>
-              {b.label}
-            </button>
-          ))}
-        </div>
-
         <p className="text-center text-sm text-slate-500 mt-6">
           Don&apos;t have an account?{" "}
           <Link href="/signup" className="font-bold text-indigo-600 hover:underline">Sign up free</Link>
